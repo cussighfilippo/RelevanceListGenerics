@@ -1,4 +1,4 @@
-package it.uniud.relevancelistgenerics;
+package it.uniud.relevancelistgenerics.evaluator;
 
 import org.uma.jmetal.util.binarySet.BinarySet;
 
