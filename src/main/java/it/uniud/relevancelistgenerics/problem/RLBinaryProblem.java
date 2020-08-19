@@ -2,7 +2,6 @@ package it.uniud.relevancelistgenerics.problem;
 
 import org.uma.jmetal.util.binarySet.BinarySet;
 
-import it.uniud.relevancelistgenerics.program.Program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
 
@@ -21,11 +20,7 @@ public class RLBinaryProblem extends RLAbstractProblem<RLBinarySolution, Boolean
 
 		switch (evalFun) {
 		case avgPrecision:
-			int bitSetLength = solution.getVariable(0).getBinarySetLength();
-			boolean[] solutionArray = new boolean[bitSetLength];
-			for (int i = 0; i < bitSetLength; i++)
-				solutionArray[i] = solution.getVariable(0).get(i);
-			actualValue = avgPrecisionMetric(solution.getVariable(0));
+			actualValue = avgPrecision(solution);
 			break;
 		default:
 			System.err.println("evaluation function makes no sense for this solution type");
@@ -34,8 +29,11 @@ public class RLBinaryProblem extends RLAbstractProblem<RLBinarySolution, Boolean
 		solution.setObjective(0, Math.abs(actualValue - targetValue));
 	}
 
-	
-	private double avgPrecisionMetric(BinarySet bitSet) {
+
+	// returns the avgPrecision of the solution
+	// the solution's objective values are not modified by the method
+	private double avgPrecision(RLBinarySolution solution) {
+		BinarySet bitSet = solution.getVariable(0);
 		double returnValue = 0;
 		int nOnes = 0;
 		for (int i = 0; i < bitSet.getBinarySetLength(); i++) {
@@ -43,17 +41,15 @@ public class RLBinaryProblem extends RLAbstractProblem<RLBinarySolution, Boolean
 				nOnes++;
 				returnValue = returnValue + ((double) nOnes / (i + 1));
 			}
-		}
-		double returnVal = returnValue / relevantDocs;
-		return returnVal;
+		} 
+		return returnValue / relevantDocs; 
 	}
+	
 
 
 	void evaluateConstraints(RLBinarySolution solution) {
 		double constraint;
-		BinarySet docs = solution.getVariable(0);
-		int numberOfRelevantDocs = 0;
-		for (int i = 0; i < docs.getBinarySetLength(); i++)  if (docs.get(i)) numberOfRelevantDocs++;
+		int numberOfRelevantDocs = solution.getNumberOfRelevantDocs();
 		constraint = relevantDocs - numberOfRelevantDocs;
 		solution.setConstraint(0, constraint);
 	}

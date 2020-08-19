@@ -15,6 +15,7 @@ import it.uniud.relevancelistgenerics.operator.RLAbstractCrossover;
 import it.uniud.relevancelistgenerics.operator.RLAbstractMutation;
 import it.uniud.relevancelistgenerics.operator.RLBinaryCrossover;
 import it.uniud.relevancelistgenerics.operator.RLBinaryMutation;
+import it.uniud.relevancelistgenerics.problem.EvaluationFunction;
 import it.uniud.relevancelistgenerics.problem.RLAbstractProblem;
 import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
@@ -35,8 +36,6 @@ import org.apache.commons.math3.distribution.EnumeratedIntegerDistribution;
  */
 public class Program
 {
-	public enum EvaluationFunction {avgPrecision, test};
-	
 	static int populationSize;
 	static int maxEvaluations;
 	static double crossoverProbability;

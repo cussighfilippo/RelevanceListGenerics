@@ -2,8 +2,8 @@ package it.uniud.relevancelistgenerics.evaluator;
 
 import java.util.Arrays;
 
+import it.uniud.relevancelistgenerics.problem.EvaluationFunction;
 import it.uniud.relevancelistgenerics.problem.RLAbstractProblem;
-import it.uniud.relevancelistgenerics.program.Program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 
 public abstract class RLAbstractEvaluator<T extends RLAbstractSolution<?,?>> {

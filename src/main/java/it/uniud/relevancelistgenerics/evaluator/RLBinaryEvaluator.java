@@ -2,8 +2,8 @@ package it.uniud.relevancelistgenerics.evaluator;
 
 import org.uma.jmetal.util.binarySet.BinarySet;
 
+import it.uniud.relevancelistgenerics.problem.EvaluationFunction;
 import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
-import it.uniud.relevancelistgenerics.program.Program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
 
 public class RLBinaryEvaluator  extends RLAbstractEvaluator<RLBinarySolution> {

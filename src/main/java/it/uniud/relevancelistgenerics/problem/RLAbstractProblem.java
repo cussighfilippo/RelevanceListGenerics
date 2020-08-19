@@ -2,8 +2,6 @@ package it.uniud.relevancelistgenerics.problem;
 
 import org.uma.jmetal.problem.AbstractGenericProblem;
 
-
-import it.uniud.relevancelistgenerics.program.Program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
 
