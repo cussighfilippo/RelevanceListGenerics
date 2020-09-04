@@ -2,6 +2,8 @@ package it.uniud.relevancelistgenerics.problem;
 
 import org.uma.jmetal.problem.AbstractGenericProblem;
 
+import it.uniud.relevancelistgenerics.metric.MetricEvaluator;
+import it.uniud.relevancelistgenerics.program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
 
@@ -14,14 +16,14 @@ public abstract class RLAbstractProblem<T extends RLAbstractSolution<?, V>,  V> 
 	public static final int nCostraints = 1;
 
 	double targetValue;
-	EvaluationFunction evalFun;
+	MetricEvaluator evaluator;
 	int relevantDocs;
 	int listLength;
 	RLAbstractSolutionFactory<T ,V> factory;
 
-	public RLAbstractProblem(double targetValue, EvaluationFunction evalFun, RLAbstractSolutionFactory<T, V> fac) {
+	public RLAbstractProblem(double targetValue, MetricEvaluator evaluator, RLAbstractSolutionFactory<T, V> fac) {
 		this.targetValue = targetValue;
-		this.evalFun = evalFun;
+		this.evaluator = evaluator;
 		this.relevantDocs = fac.getRelevantDocs();
 		this.listLength = fac.getListLength();
 		this.factory = fac;

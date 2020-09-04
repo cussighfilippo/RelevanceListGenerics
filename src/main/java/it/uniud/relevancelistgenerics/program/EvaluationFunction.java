@@ -1,3 +1,3 @@
-package it.uniud.relevancelistgenerics.problem;
+package it.uniud.relevancelistgenerics.program;
 
 public enum EvaluationFunction {avgPrecision, test}

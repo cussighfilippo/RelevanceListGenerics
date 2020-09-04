@@ -1,7 +1,6 @@
 package it.uniud.relevancelistgenerics.solution.factory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,11 +13,11 @@ import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?, V>, V> {
 
 	
-	int maxValue;
-	int listLength;
-	int relDocs;
-	EnumeratedIntegerDistribution distribution; 
-	double fractNonZero;
+	int maxValue; // max relevance value of a document
+	int listLength; // length of a Solution's relevance list
+	int relDocs; // number of relevant documents fixed for the problem
+	EnumeratedIntegerDistribution initDistribution; // probability distribution used for solution's initialization
+	double fractNonZero; // fraction of non-zero relevance documents in new solution generation
 	JMetalRandom randomGenerator;
 	
 
@@ -26,18 +25,21 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 		this.maxValue = maxValue;
 		this.listLength = size;
 		this.relDocs = relDocs;
-		this.distribution = distribution;
+		this.initDistribution = distribution;
 		this.fractNonZero = fractNonZero;
 		randomGenerator = JMetalRandom.getInstance();
 		
 	}
 	
+	
 	public abstract T generateNewSolution();
 	
 	abstract  V[] createDocumentsSet();
 
+	// generates a new solution based on the given relevance profile
 	public abstract T generateNewSolution(V[] docs);
 	
+	// generates a  new relevance profile as a int array based on the given distribution
 	int[] createDocumentDistribution() {
 
 	 	int[] array = new int[listLength];
@@ -61,10 +63,8 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 	    	howManyNotZero = relDocs;
 	    }
 	    
-	    // variante geometrica
-	    
 	    ArrayList<Integer> indiciNonZero = new ArrayList<Integer>();
-	    int[] temp = distribution.sample(howManyNotZero);
+	    int[] temp = initDistribution.sample(howManyNotZero);
 	    for(int i=0; i<temp.length; i++){
 	    	indiciNonZero.add(temp[i]);
 	    }    

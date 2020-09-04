@@ -26,7 +26,7 @@ public class RLBinarySolutionFactory extends RLAbstractSolutionFactory<RLBinaryS
 		return booleanArray;
 	}
 
-
+	@Override
 	public RLBinarySolution generateNewSolution(Boolean[] docs) {
 		if (docs.length != listLength) {
 			System.err.println(Arrays.toString(docs) + " incompatible with factory initialization");

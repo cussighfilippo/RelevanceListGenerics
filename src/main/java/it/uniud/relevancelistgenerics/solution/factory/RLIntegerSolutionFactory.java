@@ -1,7 +1,6 @@
 package it.uniud.relevancelistgenerics.solution.factory;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.commons.math3.distribution.EnumeratedIntegerDistribution;
 import it.uniud.relevancelistgenerics.solution.RLIntegerSolution;
