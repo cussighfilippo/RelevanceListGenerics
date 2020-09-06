@@ -1,11 +1,7 @@
 package it.uniud.relevancelistgenerics.problem;
 
-import java.util.List;
-
-import org.uma.jmetal.util.binarySet.BinarySet;
 
 import it.uniud.relevancelistgenerics.metric.MetricEvaluator;
-import it.uniud.relevancelistgenerics.program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.solution.RLIntegerSolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
 

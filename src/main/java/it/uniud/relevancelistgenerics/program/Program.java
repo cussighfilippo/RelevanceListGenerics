@@ -12,6 +12,8 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import it.uniud.relevancelistgenerics.program.DistributionType;
 import it.uniud.relevancelistgenerics.program.EvaluationFunction;
 import it.uniud.relevancelistgenerics.metric.AveragePrecisionEvaluator;
+import it.uniud.relevancelistgenerics.metric.MetricEvaluator;
+import it.uniud.relevancelistgenerics.metric.NDCGEvaluator;
 import it.uniud.relevancelistgenerics.utils.Utils;
 import it.uniud.relevancelistgenerics.algorithm.RLNSGAII;
 import it.uniud.relevancelistgenerics.algorithm.RLNSGAIIBuilder;
@@ -19,8 +21,11 @@ import it.uniud.relevancelistgenerics.operator.RLAbstractCrossover;
 import it.uniud.relevancelistgenerics.operator.RLAbstractMutation;
 import it.uniud.relevancelistgenerics.operator.RLBinaryCrossover;
 import it.uniud.relevancelistgenerics.operator.RLBinaryMutation;
+import it.uniud.relevancelistgenerics.operator.RLIntegerCrossover;
+import it.uniud.relevancelistgenerics.operator.RLIntegerMutation;
 import it.uniud.relevancelistgenerics.problem.RLAbstractProblem;
 import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
+import it.uniud.relevancelistgenerics.problem.RLIntegerProblem;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
@@ -153,11 +158,14 @@ public class Program
     	
     	// problem setup
     	// variables must be consistent between classes initializations
-    	AveragePrecisionEvaluator evaluator = new AveragePrecisionEvaluator(relevantDocs);
+    	MetricEvaluator evaluator = new AveragePrecisionEvaluator(relevantDocs);
 
 		switch (evalFunction) {
 		case avgPrecision:
 			evaluator = new AveragePrecisionEvaluator(relevantDocs);
+			break;
+		case ndcg:
+			evaluator = new NDCGEvaluator();
 			break;
 		default:
 			System.err.println("should not end up here");
@@ -188,10 +196,25 @@ public class Program
 			System.err.println("should not end up here");
 		}
     	
-    	RLAbstractSolutionFactory factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
-    	RLAbstractProblem problem = new RLBinaryProblem(targetValue, evaluator, factory);
-    	RLAbstractCrossover crossover = new RLBinaryCrossover(crossoverProbability, problem);
-        RLAbstractMutation  mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+		RLAbstractSolutionFactory factory;
+    	RLAbstractProblem problem;
+    	RLAbstractCrossover crossover;
+        RLAbstractMutation  mutation;
+		
+		if(maxCellValue == 1) {
+    	factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
+    	problem = new RLBinaryProblem(targetValue, evaluator, factory);
+    	crossover = new RLBinaryCrossover(crossoverProbability, problem);
+        mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+		}
+		
+		else {
+			factory = new RLIntegerSolutionFactory(maxCellValue, listLength, relevantDocs, initializationDistribution, fractNonZero);
+	    	problem = new RLIntegerProblem(targetValue, evaluator, factory);
+	    	crossover = new RLIntegerCrossover(crossoverProbability, problem);
+	        mutation = new RLIntegerMutation(mutationProbability, mutationDistribution);
+		}
+		
         SelectionOperator<List<RLAbstractSolution>, RLAbstractSolution> selection = 
         		new BinaryTournamentSelection<RLAbstractSolution>(new RankingAndCrowdingDistanceComparator<RLAbstractSolution>());
         RLNSGAIIBuilder<RLAbstractSolution> builder = new RLNSGAIIBuilder(problem, crossover, mutation, populationSize, maxErrTolerance);

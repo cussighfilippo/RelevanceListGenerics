@@ -17,14 +17,16 @@ public class RLIntegerMutation extends RLAbstractMutation<RLIntegerSolution, Int
 	void swapMutation(RLIntegerSolution solution) {
 		
 		// to complete
-		
+		System.err.print("IntegerMutation not yet implemented");
+		System.exit(1);
 	}
 
 	@Override
 	void sumMutation(RLIntegerSolution solution) {
 		
 		// to complete
-		
+		System.err.print("IntegerMutation not yet implemented");
+		System.exit(1);
 	}
 
 }

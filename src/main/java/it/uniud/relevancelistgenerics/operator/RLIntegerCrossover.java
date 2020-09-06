@@ -15,7 +15,8 @@ public class RLIntegerCrossover extends RLAbstractCrossover<RLIntegerSolution, I
 	public List<RLIntegerSolution> execute(List<RLIntegerSolution> source) {
 		
 		// to complete
-		
+		System.err.print("IntegerCrossover not yet implemented");
+		System.exit(1);
 		return source;
 	}
 
