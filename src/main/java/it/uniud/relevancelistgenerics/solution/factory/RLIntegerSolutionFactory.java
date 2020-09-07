@@ -13,7 +13,7 @@ public class RLIntegerSolutionFactory extends RLAbstractSolutionFactory<RLIntege
 	}
 
 	public RLIntegerSolution generateNewSolution() {
-		RLIntegerSolution newSolution = new RLIntegerSolution(createDocumentsSet());
+		RLIntegerSolution newSolution = new RLIntegerSolution(nVariables, nObjectives, nConstraints,createDocumentsSet());
 		return newSolution;
 	}
 
@@ -31,7 +31,7 @@ public class RLIntegerSolutionFactory extends RLAbstractSolutionFactory<RLIntege
 			System.err.println("docs length must match declared number of documents listLength of the factory");
 			System.exit(1);
 		}
-		RLIntegerSolution newSolution = new RLIntegerSolution(docs);
+		RLIntegerSolution newSolution = new RLIntegerSolution(nVariables, nObjectives, nConstraints,docs);
 		return newSolution;
 	}
 	

@@ -7,8 +7,8 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 @SuppressWarnings("serial")
 public class RLBinarySolution extends RLAbstractSolution<BinarySet, Boolean> {
 
-	public RLBinarySolution(Boolean[] docsStatus) {
-		super(docsStatus);
+	public RLBinarySolution(int nVariables, int nObjectives, int nConstraints, Boolean[] docsStatus) {
+		super(nVariables, nObjectives, nConstraints, docsStatus);
 		numberOfRelevantDocs = 0;
 		for(int i=0; i<docsStatus.length; i++) if (docsStatus[i]) numberOfRelevantDocs++;
 		setVariable(0, createNewSet(docsStatus.length, docsStatus));

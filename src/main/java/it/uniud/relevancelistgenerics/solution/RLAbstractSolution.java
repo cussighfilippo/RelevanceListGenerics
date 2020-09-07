@@ -7,18 +7,14 @@ import org.uma.jmetal.solution.AbstractSolution;
 public abstract class RLAbstractSolution<S, T> extends AbstractSolution<S>{
 
 
-		static final int nVariables = 1;
-		static final int nObjectives = 1;
-		static final int nCostraints = 1;
-		
 		int numberOfRelevantDocs;
 		
-		RLAbstractSolution(T[] docsStatus) {
-			super(nVariables, nObjectives, nCostraints);
+		RLAbstractSolution(int nVariables, int nObjectives, int nConstraints, T[] docsStatus) {
+			super(nVariables, nObjectives, nConstraints);
 		}
 		
 		RLAbstractSolution(RLAbstractSolution<S, T> solution) {
-			super(nVariables, nObjectives, nCostraints);
+			super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints());
 		}
 		
 		abstract public int getVariableLength(int index);

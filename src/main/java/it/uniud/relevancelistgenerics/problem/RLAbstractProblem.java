@@ -10,10 +10,6 @@ import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory
 
 @SuppressWarnings("serial")
 public abstract class RLAbstractProblem<T extends RLAbstractSolution<?, V>,  V> extends AbstractGenericProblem<T> {
-	
-	public static final int nVariables = 1;
-	public static final int nObjectives = 1;
-	public static final int nCostraints = 1;
 
 	double targetValue;
 	MetricEvaluator evaluator;
@@ -27,9 +23,9 @@ public abstract class RLAbstractProblem<T extends RLAbstractSolution<?, V>,  V> 
 		this.relevantDocs = fac.getRelevantDocs();
 		this.listLength = fac.getListLength();
 		this.factory = fac;
-		this.setNumberOfConstraints(nCostraints);
-		this.setNumberOfVariables(nVariables);
-		this.setNumberOfObjectives(nObjectives);
+		this.setNumberOfConstraints(fac.getNumberOfConstraints());
+		this.setNumberOfVariables(fac.getNumberOfVariables());
+		this.setNumberOfObjectives(fac.getNumberOfObjectives());
 	}
 	
 	public void evaluate(T solution) {

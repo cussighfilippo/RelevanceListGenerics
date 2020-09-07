@@ -15,7 +15,7 @@ public class RLBinarySolutionFactory extends RLAbstractSolutionFactory<RLBinaryS
 	}
 
 	public RLBinarySolution generateNewSolution() {
-		RLBinarySolution newSolution = new RLBinarySolution(createDocumentsSet());
+		RLBinarySolution newSolution = new RLBinarySolution(nVariables, nObjectives, nConstraints,createDocumentsSet());
 		return newSolution;
 	}
 
@@ -33,7 +33,7 @@ public class RLBinarySolutionFactory extends RLAbstractSolutionFactory<RLBinaryS
 			System.err.println("docs length must match declared number of documents listLength of the factory");
 			System.exit(1);
 		}
-		RLBinarySolution newSolution = new RLBinarySolution(docs);
+		RLBinarySolution newSolution = new RLBinarySolution(nVariables, nObjectives, nConstraints,docs);
 		return newSolution;
 	}
 

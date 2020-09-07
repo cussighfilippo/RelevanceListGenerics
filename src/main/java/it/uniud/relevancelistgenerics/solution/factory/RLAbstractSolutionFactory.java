@@ -12,6 +12,10 @@ import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 
 public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?, V>, V> {
 
+	//solution's number of variables, objectives and constraints 
+	int nVariables = 1;
+	int nObjectives = 1;
+	int nConstraints = 1;
 	
 	double maxValue; // max relevance value of a document
 	int listLength; // length of a Solution's relevance list
@@ -105,5 +109,29 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 
 	public double getMaxValue() {
 		return maxValue;
+	}
+	
+	public int getNumberOfVariables() {
+		return nVariables;
+	}
+
+	public void setNumberOfVariables(int nVariables) {
+		this.nVariables = nVariables;
+	}
+
+	public int getNumberOfObjectives() {
+		return nObjectives;
+	}
+
+	public void setNumberOfObjectives(int nObjectives) {
+		this.nObjectives = nObjectives;
+	}
+
+	public int getNumberOfConstraints() {
+		return nConstraints;
+	}
+
+	public void setNumberOfConstraints(int nConstraints) {
+		this.nConstraints = nConstraints;
 	}
 }

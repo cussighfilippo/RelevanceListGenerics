@@ -8,8 +8,8 @@ import org.uma.jmetal.solution.Solution;
 @SuppressWarnings("serial")
 public class RLIntegerSolution extends RLAbstractSolution<List<Integer>, Integer> {
 
-	public RLIntegerSolution(Integer[] docsStatus) {
-		super(docsStatus);
+	public RLIntegerSolution(int nVariables, int nObjectives, int nConstraints, Integer[] docsStatus) {
+		super(nVariables, nObjectives, nConstraints, docsStatus);
 		numberOfRelevantDocs = 0;
 		for(int i=0; i<docsStatus.length; i++) if (docsStatus[i]>0) numberOfRelevantDocs++;
 		setVariable(0, createNewSet(docsStatus.length, docsStatus));
