@@ -13,7 +13,7 @@ import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?, V>, V> {
 
 	
-	int maxValue; // max relevance value of a document
+	double maxValue; // max relevance value of a document
 	int listLength; // length of a Solution's relevance list
 	int relDocs; // number of relevant documents fixed for the problem
 	EnumeratedIntegerDistribution initDistribution; // probability distribution used for solution's initialization
@@ -21,7 +21,7 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 	JMetalRandom randomGenerator;
 	
 
-	public RLAbstractSolutionFactory(int maxValue, int size, int relDocs, EnumeratedIntegerDistribution distribution, double fractNonZero) {
+	public RLAbstractSolutionFactory(double maxValue, int size, int relDocs, EnumeratedIntegerDistribution distribution, double fractNonZero) {
 		this.maxValue = maxValue;
 		this.listLength = size;
 		this.relDocs = relDocs;
@@ -40,7 +40,7 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 	public abstract T generateNewSolution(V[] docs);
 	
 	// generates a  new relevance profile as a int array based on the given distribution
-	int[] createDocumentDistribution() {
+	int[] createDiscreteDocumentDistribution() {
 
 	 	int[] array = new int[listLength];
 	    for (int i = 0; i < listLength ; i++) {
@@ -103,7 +103,7 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 		return relDocs;
 	}
 
-	public int getMaxValue() {
+	public double getMaxValue() {
 		return maxValue;
 	}
 }

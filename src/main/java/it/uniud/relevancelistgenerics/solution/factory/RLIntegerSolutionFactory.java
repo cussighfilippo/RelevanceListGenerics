@@ -9,7 +9,7 @@ public class RLIntegerSolutionFactory extends RLAbstractSolutionFactory<RLIntege
 
 	public RLIntegerSolutionFactory(int maxValue, int size, int relDocs, EnumeratedIntegerDistribution distribution,
 			double fractNonZero) {
-		super(maxValue, size, relDocs, distribution, fractNonZero);
+		super( maxValue, size, relDocs, distribution, fractNonZero);
 	}
 
 	public RLIntegerSolution generateNewSolution() {
@@ -18,7 +18,7 @@ public class RLIntegerSolutionFactory extends RLAbstractSolutionFactory<RLIntege
 	}
 
 	Integer[] createDocumentsSet() {
-		int[] array = createDocumentDistribution();
+		int[] array = createDiscreteDocumentDistribution();
 		Integer[] integerArray = new Integer[array.length];
 		for (int i=0; i<array.length; i++) integerArray[i] = array[i]; 
 		return integerArray;

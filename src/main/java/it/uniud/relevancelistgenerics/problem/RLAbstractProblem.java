@@ -27,7 +27,9 @@ public abstract class RLAbstractProblem<T extends RLAbstractSolution<?, V>,  V> 
 		this.relevantDocs = fac.getRelevantDocs();
 		this.listLength = fac.getListLength();
 		this.factory = fac;
-
+		this.setNumberOfConstraints(nCostraints);
+		this.setNumberOfVariables(nVariables);
+		this.setNumberOfObjectives(nObjectives);
 	}
 	
 	public void evaluate(T solution) {

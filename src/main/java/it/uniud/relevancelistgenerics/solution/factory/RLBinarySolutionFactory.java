@@ -20,7 +20,7 @@ public class RLBinarySolutionFactory extends RLAbstractSolutionFactory<RLBinaryS
 	}
 
 	Boolean[] createDocumentsSet() {
-		int[] array = createDocumentDistribution();
+		int[] array = createDiscreteDocumentDistribution();
 		Boolean[] booleanArray = new Boolean[array.length];
 		for (int i=0; i<array.length; i++) if (array[i]==1) booleanArray[i] = true; else booleanArray[i] = false; 
 		return booleanArray;
