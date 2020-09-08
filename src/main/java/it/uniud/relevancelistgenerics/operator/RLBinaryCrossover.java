@@ -27,8 +27,8 @@ public class RLBinaryCrossover extends RLAbstractCrossover<RLBinarySolution, Boo
 
         List<RLBinarySolution> childrenSolution = new ArrayList<RLBinarySolution>();
 
-        RLBinarySolution firstChild = problem.getFactory().generateNewSolution();
-        RLBinarySolution secondChild = problem.getFactory().generateNewSolution();
+        RLBinarySolution firstChild = problem.getFactory().generateNewSolution(firstDocsStatus);
+        RLBinarySolution secondChild = problem.getFactory().generateNewSolution(secondDocsStatus);
         childrenSolution.add(firstChild);
         childrenSolution.add(secondChild);
         
