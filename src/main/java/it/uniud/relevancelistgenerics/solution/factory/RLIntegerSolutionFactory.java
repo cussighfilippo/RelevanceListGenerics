@@ -13,12 +13,12 @@ public class RLIntegerSolutionFactory extends RLAbstractSolutionFactory<RLIntege
 	}
 
 	public RLIntegerSolution generateNewSolution() {
-		RLIntegerSolution newSolution = new RLIntegerSolution(nVariables, nObjectives, nConstraints,createDocumentsSet());
+		RLIntegerSolution newSolution = new RLIntegerSolution(nVariables, nObjectives, nConstraints,createRelevanceSet());
 		return newSolution;
 	}
 
-	Integer[] createDocumentsSet() {
-		int[] array = createDiscreteDocumentDistribution();
+	Integer[] createRelevanceSet() {
+		int[] array = createDiscreteDistribution();
 		Integer[] integerArray = new Integer[array.length];
 		for (int i=0; i<array.length; i++) integerArray[i] = array[i]; 
 		return integerArray;

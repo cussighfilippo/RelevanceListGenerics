@@ -15,12 +15,12 @@ public class RLBinarySolutionFactory extends RLAbstractSolutionFactory<RLBinaryS
 	}
 
 	public RLBinarySolution generateNewSolution() {
-		RLBinarySolution newSolution = new RLBinarySolution(nVariables, nObjectives, nConstraints,createDocumentsSet());
+		RLBinarySolution newSolution = new RLBinarySolution(nVariables, nObjectives, nConstraints,createRelevanceSet());
 		return newSolution;
 	}
 
-	Boolean[] createDocumentsSet() {
-		int[] array = createDiscreteDocumentDistribution();
+	Boolean[] createRelevanceSet() {
+		int[] array = createDiscreteDistribution();
 		Boolean[] booleanArray = new Boolean[array.length];
 		for (int i=0; i<array.length; i++) if (array[i]==1) booleanArray[i] = true; else booleanArray[i] = false; 
 		return booleanArray;

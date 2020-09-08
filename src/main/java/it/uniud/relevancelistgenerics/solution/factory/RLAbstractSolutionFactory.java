@@ -38,13 +38,13 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 	
 	public abstract T generateNewSolution();
 	
-	abstract  V[] createDocumentsSet();
+	abstract  V[] createRelevanceSet();
 
 	// generates a new solution based on the given relevance profile
 	public abstract T generateNewSolution(V[] docs);
 	
 	// generates a  new relevance profile as a int array based on the given distribution
-	int[] createDiscreteDocumentDistribution() {
+	int[] createDiscreteDistribution() {
 
 	 	int[] array = new int[listLength];
 	    for (int i = 0; i < listLength ; i++) {
