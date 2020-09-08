@@ -58,4 +58,9 @@ public class RLBinarySolution extends RLAbstractSolution<BinarySet, Boolean> {
 		return getVariable(index).getBinarySetLength();
 	}
 
+	@Override
+	public void setVariable(int i, BinarySet set) {
+		super.setVariable(i, set);
+		if(i == 0) numberOfRelevantDocs = set.cardinality();
+	}
 }

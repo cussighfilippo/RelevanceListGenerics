@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.binarySet.BinarySet;
 
 @SuppressWarnings("serial")
 public class RLIntegerSolution extends RLAbstractSolution<List<Integer>, Integer> {
@@ -59,4 +60,13 @@ public class RLIntegerSolution extends RLAbstractSolution<List<Integer>, Integer
 		return getVariable(index).size();
 	}
 
+	@Override
+	public void setVariable(int i, List<Integer> list) {
+		super.setVariable(i, list);
+		if(i == 0) {
+			int sum = 0;
+			for (int j=0; i<list.size(); j++) if (list.get(j) != 0) sum++;
+			numberOfRelevantDocs = sum;
+		}
+	}
 }
