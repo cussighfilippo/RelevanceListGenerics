@@ -65,7 +65,7 @@ public class Program
     {
 
     	
-    	//cmdline  java -jar .\target\RelevanceList-1.0-SNAPSHOT-jar-with-dependencies.jar 100 500000 0.8 0.3 100 1 0.8957 21 0.00005 10 "avgPrecision" "risultati.csv" 0.1 "geometric" "geometric"
+    	//cmdline  java -jar .\target\RelevanceListGenerics-1.0-SNAPSHOT-jar-with-dependencies.jar 100 500000 0.8 0.3 100 1 0.8957 21 0.00005 10 "avgPrecision" "risultati.csv" 0.1 "geometric" "geometric"
 		
 		
     	// Lettura dei parametri
@@ -199,17 +199,17 @@ public class Program
     	
 		
 		if(maxCellValue == 1) {
-		RLBinarySolutionFactory factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
-    	RLBinaryProblem problem = new RLBinaryProblem(targetValue, evaluator, factory);
-    	RLBinaryCrossover crossover = new RLBinaryCrossover(crossoverProbability, problem);
-        RLBinaryMutation mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
-        
-        SelectionOperator<List<RLBinarySolution>, RLBinarySolution> selection = 
-        		new BinaryTournamentSelection<RLBinarySolution>(new RankingAndCrowdingDistanceComparator<RLBinarySolution>());
-        
-        RLNSGAIIBuilder<RLBinarySolution> builder = new RLNSGAIIBuilder<RLBinarySolution>(problem, crossover, mutation, populationSize, maxErrTolerance);
-        builder.setSelectionOperator(selection);
-        builder.setMaxEvaluations(maxEvaluations);
+			RLBinarySolutionFactory factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
+	    	RLBinaryProblem problem = new RLBinaryProblem(targetValue, evaluator, factory);
+	    	RLBinaryCrossover crossover = new RLBinaryCrossover(crossoverProbability, problem);
+	        RLBinaryMutation mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+	        
+	        SelectionOperator<List<RLBinarySolution>, RLBinarySolution> selection = 
+	        		new BinaryTournamentSelection<RLBinarySolution>(new RankingAndCrowdingDistanceComparator<RLBinarySolution>());
+	        
+	        RLNSGAIIBuilder<RLBinarySolution> builder = new RLNSGAIIBuilder<RLBinarySolution>(problem, crossover, mutation, populationSize, maxErrTolerance);
+	        builder.setSelectionOperator(selection);
+	        builder.setMaxEvaluations(maxEvaluations);
 		evaluation(builder);
 		}
 		
@@ -228,27 +228,14 @@ public class Program
 			evaluation(builder);
 		}
 		
-        
-		// Results printing on my file
-        
-
-        String PATH_SEPARATOR = System.getProperty("file.separator").toString();
-		String filePath =  System.getProperty("user.dir") + PATH_SEPARATOR + "Target" + PATH_SEPARATOR + fileName;
-		FileWriter outfile = new FileWriter(filePath, true);
-		outfile.write("\n" + targetValue+","+relevantDocs +","+listLength +"," + "population" + "," +evalFunction.toString()+","+
-				crossoverProbability+","+mutationProbability+","+maxEvaluations+","+maxErrTolerance+","+
-			    "\t" + bestSolution.getNumberOfRelevantDocs() +","+ bestSolution.getObjective(0) +"," +bestSolution.getVariable(0).toString());
-
-		outfile.close();
-
 		
-		//Results printing on old file with original format
-		oldFilePrinting(solutions);
+		//Results printing on file with original format
+		filePrinting(solutions);
 		System.out.println("execution completed");
 		
     }
     
-    static void oldFilePrinting(List<RLAbstractSolution<?,?>> list) throws IOException {
+    static void filePrinting(List<RLAbstractSolution<?,?>> list) throws IOException {
     	
     	double bestError = 10000000;
 		int bestRelevantCount = -1;
@@ -285,7 +272,7 @@ public class Program
 
 
         String PATH_SEPARATOR = System.getProperty("file.separator").toString();
-		String filePath =  System.getProperty("user.dir") + PATH_SEPARATOR + "Target" + PATH_SEPARATOR + "esperimenti_genetico.csv";
+		String filePath =  System.getProperty("user.dir") + PATH_SEPARATOR + "Target" + PATH_SEPARATOR + fileName;
 	    FileWriter outfile = new FileWriter(filePath, true);
 		outfile.write("\n"+targetValue+","+relevantDocs +","+listLength +","+evalFunction.toString()+","+
 				crossoverProbability+","+mutationProbability+","+maxEvaluations+","+maxErrTolerance+","+
