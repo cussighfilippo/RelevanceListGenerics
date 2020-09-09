@@ -28,6 +28,7 @@ import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
 import it.uniud.relevancelistgenerics.problem.RLIntegerProblem;
 import it.uniud.relevancelistgenerics.solution.RLAbstractSolution;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
+import it.uniud.relevancelistgenerics.solution.RLIntegerSolution;
 import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
 import it.uniud.relevancelistgenerics.solution.factory.RLBinarySolutionFactory;
 import it.uniud.relevancelistgenerics.solution.factory.RLIntegerSolutionFactory;
@@ -57,15 +58,15 @@ public class Program
 	static DistributionType initializationDistributionType;  // geometric or uniform distribution 
 	static DistributionType mutationDistributionType;	 // geometric or uniform distribution 
 	
-    /**
-     * @param args
-     * @throws IOException 
-     */
-    public static void main( String[] args ) throws IOException
+	static RLAbstractSolution<?,?> bestSolution;
+	static List<RLAbstractSolution<?,?>> solutions;
+	
+    public static  void main( String[] args ) throws IOException
     {
 
     	
-//cmdline  java -jar .\target\RelevanceList-1.0-SNAPSHOT-jar-with-dependencies.jar 50 50000 0.8 0.3 50 1 0.8957 6 0.00005 10 "avgPrecision" "risultati.csv" 0.1 "geometric" "geometric"
+    	//cmdline  java -jar .\target\RelevanceList-1.0-SNAPSHOT-jar-with-dependencies.jar 100 500000 0.8 0.3 100 1 0.8957 21 0.00005 10 "avgPrecision" "risultati.csv" 0.1 "geometric" "geometric"
+		
 		
     	// Lettura dei parametri
 		
@@ -196,56 +197,38 @@ public class Program
 			System.err.println("should not end up here");
 		}
     	
-		RLAbstractSolutionFactory factory;
-    	RLAbstractProblem problem;
-    	RLAbstractCrossover crossover;
-        RLAbstractMutation  mutation;
 		
 		if(maxCellValue == 1) {
-    	factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
-    	problem = new RLBinaryProblem(targetValue, evaluator, factory);
-    	crossover = new RLBinaryCrossover(crossoverProbability, problem);
-        mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+		RLBinarySolutionFactory factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
+    	RLBinaryProblem problem = new RLBinaryProblem(targetValue, evaluator, factory);
+    	RLBinaryCrossover crossover = new RLBinaryCrossover(crossoverProbability, problem);
+        RLBinaryMutation mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+        
+        SelectionOperator<List<RLBinarySolution>, RLBinarySolution> selection = 
+        		new BinaryTournamentSelection<RLBinarySolution>(new RankingAndCrowdingDistanceComparator<RLBinarySolution>());
+        
+        RLNSGAIIBuilder<RLBinarySolution> builder = new RLNSGAIIBuilder<RLBinarySolution>(problem, crossover, mutation, populationSize, maxErrTolerance);
+        builder.setSelectionOperator(selection);
+        builder.setMaxEvaluations(maxEvaluations);
+		evaluation(builder);
 		}
 		
 		else {
-			factory = new RLIntegerSolutionFactory(maxCellValue, listLength, relevantDocs, initializationDistribution, fractNonZero);
-	    	problem = new RLIntegerProblem(targetValue, evaluator, factory);
-	    	crossover = new RLIntegerCrossover(crossoverProbability, problem);
-	        mutation = new RLIntegerMutation(mutationProbability, mutationDistribution);
+			RLIntegerSolutionFactory factory = new RLIntegerSolutionFactory(maxCellValue, listLength, relevantDocs, initializationDistribution, fractNonZero);
+			RLIntegerProblem problem = new RLIntegerProblem(targetValue, evaluator, (RLAbstractSolutionFactory<RLIntegerSolution, Integer>) factory);
+	    	RLIntegerCrossover crossover = new RLIntegerCrossover(crossoverProbability, (RLAbstractProblem<RLIntegerSolution, Integer>) problem);
+	        RLIntegerMutation mutation = new RLIntegerMutation(mutationProbability, mutationDistribution);
+	        
+	        SelectionOperator<List<RLIntegerSolution>, RLIntegerSolution> selection = 
+	        		new BinaryTournamentSelection<RLIntegerSolution>(new RankingAndCrowdingDistanceComparator<RLIntegerSolution>());
+	        
+	        RLNSGAIIBuilder<RLIntegerSolution> builder = new RLNSGAIIBuilder<RLIntegerSolution>(problem, crossover, mutation, populationSize, maxErrTolerance);
+	        builder.setSelectionOperator(selection);
+	        builder.setMaxEvaluations(maxEvaluations);
+			evaluation(builder);
 		}
 		
-        SelectionOperator<List<RLAbstractSolution>, RLAbstractSolution> selection = 
-        		new BinaryTournamentSelection<RLAbstractSolution>(new RankingAndCrowdingDistanceComparator<RLAbstractSolution>());
-        RLNSGAIIBuilder<RLAbstractSolution> builder = new RLNSGAIIBuilder(problem, crossover, mutation, populationSize, maxErrTolerance);
-        builder.setSelectionOperator(selection);
-        builder.setMaxEvaluations(maxEvaluations);
-        RLNSGAII<RLAbstractSolution> algorithm; 
-    	
-    	
-  // evaluation
         
-        
-        RLAbstractSolution currentBestSolution;
-        RLAbstractSolution bestSolution=null;
-        double bestError = Double.MAX_VALUE;
-        List<RLAbstractSolution> solutions = new ArrayList<RLAbstractSolution>();
-        
-        int seed =0;
-        while( seed < numExperimentIterations && bestError > maxErrTolerance) { 
-	        algorithm = builder.build();
-	        algorithm.run();
-	        currentBestSolution = algorithm.getBestSolution();
-	        System.out.println((seed+1) + "° exp Solution" + "\t" + currentBestSolution.getVariable(0).toString() + "\t" + (currentBestSolution.getObjective(0)) + "\t" + currentBestSolution.getNumberOfRelevantDocs());
-	        System.out.println();
-	        if (bestSolution==null || currentBestSolution.getObjective(0)<bestSolution.getObjective(0) ) {
-	        	bestSolution = currentBestSolution;
-	        	bestError = bestSolution.getObjective(0);
-	        }
-	        solutions.add(currentBestSolution);
-	        seed++;
-        }
-     
 		// Results printing on my file
         
 
@@ -265,13 +248,13 @@ public class Program
 		
     }
     
-    static void oldFilePrinting(List<RLAbstractSolution> solutions) throws IOException {
+    static void oldFilePrinting(List<RLAbstractSolution<?,?>> list) throws IOException {
     	
     	double bestError = 10000000;
 		int bestRelevantCount = -1;
 		double bestValue = 10000000;
 		String bestList = "UNDEF";
-        int listSize = solutions.size();
+        int listSize = list.size();
         
 		double[] vettoreErrori = new double[listSize];	
 		double[] vettoreBestValues = new double[listSize];
@@ -279,7 +262,7 @@ public class Program
 		String[] vettoreListe = new String[listSize];
 		
 		int counter = 0;
-		for(RLAbstractSolution a : solutions) {
+		for(RLAbstractSolution a : list) {
 			vettoreErrori[counter] = a.getObjective(0);
 			vettoreRelevantCount[counter] = a.getNumberOfRelevantDocs();
 			vettoreBestValues[counter] = Math.abs(targetValue - a.getObjective(0));
@@ -311,6 +294,28 @@ public class Program
 	    
 		
 		outfile.close();
+    }
+    
+    
+    static void evaluation (RLNSGAIIBuilder builder) {
+    	   RLAbstractSolution currentBestSolution;
+           double bestError = Double.MAX_VALUE;
+           solutions = new ArrayList<RLAbstractSolution<?,?>>();
+           
+           int seed =0;
+           while( seed < numExperimentIterations && bestError > maxErrTolerance) { 
+        	RLNSGAII algorithm = builder.build();
+   	        algorithm.run();
+   	        currentBestSolution = (RLAbstractSolution) algorithm.getBestSolution();
+   	        System.out.println((seed+1) + "° exp Solution" + "\t" + currentBestSolution.getVariable(0).toString() + "\t" + (currentBestSolution.getObjective(0)) + "\t" + currentBestSolution.getNumberOfRelevantDocs());
+   	        System.out.println();
+   	        if (bestSolution==null || currentBestSolution.getObjective(0)<bestSolution.getObjective(0) ) {
+   	        	bestSolution = currentBestSolution;
+   	        	bestError = bestSolution.getObjective(0);
+   	        }
+   	        solutions.add(currentBestSolution);
+   	        seed++;
+           }
     }
 
 	
