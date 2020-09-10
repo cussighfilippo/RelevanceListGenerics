@@ -65,7 +65,7 @@ public class Program
     {
 
     	
-    	//cmdline  java -jar .\target\RelevanceListGenerics-1.0-SNAPSHOT-jar-with-dependencies.jar 100 500000 0.8 0.3 100 1 0.8957 21 0.00005 10 "avgPrecision" "risultati.csv" 0.1 "geometric" "geometric"
+    	//cmdline  java -jar .\target\RelevanceListGenerics-1.0-SNAPSHOT-jar-with-dependencies.jar 100 500000 0.8 0.3 100 1 0.8957 21 0.00005 10 avgPrecision risultati.csv 0.1 geometric geometric
 		
 		
     	// Lettura dei parametri

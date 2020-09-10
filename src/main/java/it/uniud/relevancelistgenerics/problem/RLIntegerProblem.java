@@ -3,14 +3,14 @@ package it.uniud.relevancelistgenerics.problem;
 
 import it.uniud.relevancelistgenerics.metric.MetricEvaluator;
 import it.uniud.relevancelistgenerics.solution.RLIntegerSolution;
-import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
+import it.uniud.relevancelistgenerics.solution.factory.RLIntegerSolutionFactory;
 
 @SuppressWarnings("serial")
 public class RLIntegerProblem extends RLAbstractProblem<RLIntegerSolution,  Integer>{
 
 	
 	public RLIntegerProblem(double targetValue, MetricEvaluator evaluator,
-			RLAbstractSolutionFactory<RLIntegerSolution, Integer> fac) {
+			RLIntegerSolutionFactory fac) {
 		super(targetValue, evaluator, fac);	
 	}
 

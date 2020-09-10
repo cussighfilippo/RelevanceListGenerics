@@ -2,14 +2,14 @@ package it.uniud.relevancelistgenerics.problem;
 
 import it.uniud.relevancelistgenerics.metric.MetricEvaluator;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
-import it.uniud.relevancelistgenerics.solution.factory.RLAbstractSolutionFactory;
+import it.uniud.relevancelistgenerics.solution.factory.RLBinarySolutionFactory;
 
 @SuppressWarnings("serial")
 public class RLBinaryProblem extends RLAbstractProblem<RLBinarySolution, Boolean>{
 
 	
 	public RLBinaryProblem(double targetValue, MetricEvaluator evalFun,
-			RLAbstractSolutionFactory<RLBinarySolution, Boolean> fac) {
+			RLBinarySolutionFactory fac) {
 		super(targetValue, evalFun, fac);	
 	}
 
