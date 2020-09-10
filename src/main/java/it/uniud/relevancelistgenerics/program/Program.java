@@ -215,8 +215,8 @@ public class Program
 		
 		else {
 			RLIntegerSolutionFactory factory = new RLIntegerSolutionFactory(maxCellValue, listLength, relevantDocs, initializationDistribution, fractNonZero);
-			RLIntegerProblem problem = new RLIntegerProblem(targetValue, evaluator, (RLAbstractSolutionFactory<RLIntegerSolution, Integer>) factory);
-	    	RLIntegerCrossover crossover = new RLIntegerCrossover(crossoverProbability, (RLAbstractProblem<RLIntegerSolution, Integer>) problem);
+			RLIntegerProblem problem = new RLIntegerProblem(targetValue, evaluator, factory);
+	    	RLIntegerCrossover crossover = new RLIntegerCrossover(crossoverProbability,  problem);
 	        RLIntegerMutation mutation = new RLIntegerMutation(mutationProbability, mutationDistribution);
 	        
 	        SelectionOperator<List<RLIntegerSolution>, RLIntegerSolution> selection = 

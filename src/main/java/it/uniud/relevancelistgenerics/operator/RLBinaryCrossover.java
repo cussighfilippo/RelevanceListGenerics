@@ -3,17 +3,16 @@ package it.uniud.relevancelistgenerics.operator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import it.uniud.relevancelistgenerics.problem.RLAbstractProblem;
+import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
 import it.uniud.relevancelistgenerics.solution.RLBinarySolution;
 
 @SuppressWarnings("serial")
 public class RLBinaryCrossover extends RLAbstractCrossover<RLBinarySolution, Boolean>{
 
 	public RLBinaryCrossover(double crossoverProbability,
-			RLAbstractProblem<RLBinarySolution,  Boolean> problem) {
+			RLBinaryProblem problem) {
 		super(crossoverProbability, problem);
 	}
 
