@@ -38,6 +38,7 @@ public abstract class RLAbstractSolutionFactory< T extends RLAbstractSolution<?,
 	
 	public abstract T generateNewSolution();
 	
+	// returns a new array representing a relevance profile
 	abstract  V[] createRelevanceSet();
 
 	// generates a new solution based on the given relevance profile

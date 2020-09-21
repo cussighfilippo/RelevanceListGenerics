@@ -17,12 +17,12 @@ import it.uniud.relevancelistgenerics.metric.NDCGEvaluator;
 import it.uniud.relevancelistgenerics.utils.Utils;
 import it.uniud.relevancelistgenerics.algorithm.RLNSGAII;
 import it.uniud.relevancelistgenerics.algorithm.RLNSGAIIBuilder;
-import it.uniud.relevancelistgenerics.operator.RLAbstractCrossover;
-import it.uniud.relevancelistgenerics.operator.RLAbstractMutation;
-import it.uniud.relevancelistgenerics.operator.RLBinaryCrossover;
-import it.uniud.relevancelistgenerics.operator.RLBinaryMutation;
-import it.uniud.relevancelistgenerics.operator.RLIntegerCrossover;
-import it.uniud.relevancelistgenerics.operator.RLIntegerMutation;
+import it.uniud.relevancelistgenerics.operator.crossover.RLAbstractCrossover;
+import it.uniud.relevancelistgenerics.operator.crossover.RLBinaryCrossover;
+import it.uniud.relevancelistgenerics.operator.crossover.RLIntegerCrossover;
+import it.uniud.relevancelistgenerics.operator.mutation.RLAbstractSumSwapMutation;
+import it.uniud.relevancelistgenerics.operator.mutation.RLBinarySumSwapMutation;
+import it.uniud.relevancelistgenerics.operator.mutation.RLIntegerSumSwapMutation;
 import it.uniud.relevancelistgenerics.problem.RLAbstractProblem;
 import it.uniud.relevancelistgenerics.problem.RLBinaryProblem;
 import it.uniud.relevancelistgenerics.problem.RLIntegerProblem;
@@ -202,7 +202,7 @@ public class Program
 			RLBinarySolutionFactory factory = new RLBinarySolutionFactory(listLength, relevantDocs, initializationDistribution, fractNonZero);
 	    	RLBinaryProblem problem = new RLBinaryProblem(targetValue, evaluator, factory);
 	    	RLBinaryCrossover crossover = new RLBinaryCrossover(crossoverProbability, problem);
-	        RLBinaryMutation mutation = new RLBinaryMutation(mutationProbability, mutationDistribution);
+	        RLBinarySumSwapMutation mutation = new RLBinarySumSwapMutation(mutationProbability, mutationDistribution);
 	        
 	        SelectionOperator<List<RLBinarySolution>, RLBinarySolution> selection = 
 	        		new BinaryTournamentSelection<RLBinarySolution>(new RankingAndCrowdingDistanceComparator<RLBinarySolution>());
@@ -217,7 +217,7 @@ public class Program
 			RLIntegerSolutionFactory factory = new RLIntegerSolutionFactory(maxCellValue, listLength, relevantDocs, initializationDistribution, fractNonZero);
 			RLIntegerProblem problem = new RLIntegerProblem(targetValue, evaluator, factory);
 	    	RLIntegerCrossover crossover = new RLIntegerCrossover(crossoverProbability,  problem);
-	        RLIntegerMutation mutation = new RLIntegerMutation(mutationProbability, mutationDistribution);
+	        RLIntegerSumSwapMutation mutation = new RLIntegerSumSwapMutation(mutationProbability, mutationDistribution);
 	        
 	        SelectionOperator<List<RLIntegerSolution>, RLIntegerSolution> selection = 
 	        		new BinaryTournamentSelection<RLIntegerSolution>(new RankingAndCrowdingDistanceComparator<RLIntegerSolution>());
